@@ -26,6 +26,11 @@ module.exports = {
         },
       },
       {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: "babel-loader",
+      },
+      {
         test: /\.(css|s[ac]ss)$/i,
         use: ["style-loader", "css-loader", "postcss-loader"],
       },
@@ -45,20 +50,20 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {
         login: "login@http://localhost:8081/remoteEntry.js",
-        register: "register@http://localhost:8083/remoteEntry.js"
+        register: "register@http://localhost:8083/remoteEntry.js",
       },
       exposes: {},
       shared: {
         react: {
           singleton: true,
           requiredVersion: deps.react,
-          eager: true
+          eager: true,
         },
         "react-dom": {
           singleton: true,
           requiredVersion: deps["react-dom"],
-          eager: true
-        }
+          eager: true,
+        },
       },
     }),
     new HtmlWebPackPlugin({
