@@ -8,7 +8,7 @@ export const submit = async (setMessage: (value: string) => void) => {
     });
     const data = await response.json();
     alert(data.message);
-  } catch (error) {
+  } catch {
     alert("Something went worng.");
   }
 };
