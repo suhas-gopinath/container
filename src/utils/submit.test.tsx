@@ -5,7 +5,7 @@ describe("submit()", () => {
     jest.clearAllMocks();
 
     // mock alert
-    jest.spyOn(window, "alert").mockImplementation(() => {});
+    jest.spyOn(globalThis, "alert").mockImplementation(() => {});
 
     // spy sessionStorage.getItem
     jest.spyOn(Storage.prototype, "getItem");
@@ -14,7 +14,7 @@ describe("submit()", () => {
   test("calls verify API with Authorization header when JWT exists", async () => {
     (Storage.prototype.getItem as jest.Mock).mockReturnValue("jwt-token-123");
 
-    global.fetch = jest.fn().mockResolvedValue({
+    globalThis.fetch = jest.fn().mockResolvedValue({
       json: async () => ({ message: "Token is valid" }),
     } as Response);
 
@@ -22,7 +22,7 @@ describe("submit()", () => {
 
     expect(Storage.prototype.getItem).toHaveBeenCalledWith("jwt");
 
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(globalThis.fetch).toHaveBeenCalledWith(
       "http://localhost:90/users/verify",
       {
         headers: {
@@ -31,17 +31,17 @@ describe("submit()", () => {
       }
     );
 
-    expect(window.alert).toHaveBeenCalledWith("Token is valid");
+    expect(globalThis.alert).toHaveBeenCalledWith("Token is valid");
   });
 
   test("calls verify API without Authorization header when JWT does not exist", async () => {
     (Storage.prototype.getItem as jest.Mock).mockReturnValue(null);
-    global.fetch = jest.fn().mockResolvedValue({
+    globalThis.fetch = jest.fn().mockResolvedValue({
       json: async () => ({ message: "No token provided" }),
     } as Response);
     await submit(jest.fn());
 
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(globalThis.fetch).toHaveBeenCalledWith(
       "http://localhost:90/users/verify",
       {
         headers: {
@@ -50,13 +50,15 @@ describe("submit()", () => {
       }
     );
 
-    expect(window.alert).toHaveBeenCalledWith("No token provided");
+    expect(globalThis.alert).toHaveBeenCalledWith("No token provided");
   });
 
   test("alerts generic error message when fetch throws", async () => {
     (Storage.prototype.getItem as jest.Mock).mockReturnValue("jwt-token-123");
-    global.fetch = jest.fn().mockRejectedValue(new Error("Network failure"));
+    globalThis.fetch = jest
+      .fn()
+      .mockRejectedValue(new Error("Network failure"));
     await submit(jest.fn());
-    expect(window.alert).toHaveBeenCalledWith("Something went worng.");
+    expect(globalThis.alert).toHaveBeenCalledWith("Something went worng.");
   });
 });
