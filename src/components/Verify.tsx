@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { submit } from "./utils/submit";
+import { submit } from "../utils/submit";
 
 export const Verify = () => {
   const [message, setMessage] = useState<string>("");

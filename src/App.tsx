@@ -4,7 +4,7 @@ import { Login } from "login/Login";
 import { Register } from "register/Register";
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Verify } from "./Verify";
+import { Verify } from "./components/Verify";
 
 const App = () => (
   <div className="container">
