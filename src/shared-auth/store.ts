@@ -1,12 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './authSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./authSlice";
 
 /**
  * Redux Store Configuration for Module Federation
- * 
+ *
  * This store is designed to be shared across microfrontends via Module Federation.
  * It manages authentication state (JWT access token) as a singleton.
- * 
+ *
  * IMPORTANT: This store instance should be exposed via Module Federation
  * to ensure all remote apps use the same Redux store instance.
  */
@@ -15,7 +15,7 @@ export const store = configureStore({
     auth: authReducer,
   },
   // Enable Redux DevTools in development
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: process.env.NODE_ENV !== "production",
 });
 
 /**
@@ -36,3 +36,5 @@ export type AppDispatch = typeof store.dispatch;
  * @returns JWT access token or null
  */
 export const selectAccessToken = (state: RootState) => state.auth.accessToken;
+
+export { setAccessToken } from "./authSlice";
