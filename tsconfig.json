@@ -14,5 +14,5 @@
     "allowJs": true,
     "types": ["jest", "node", "@testing-library/jest-dom"]
   },
-  "include": ["src"]
+  "include": ["module-federation.d.ts"]
 }
