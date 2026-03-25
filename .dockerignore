@@ -5,3 +5,5 @@ dist
 .gitignore
 Dockerfile
 .dockerignore
+.slingshot
+.vscode
