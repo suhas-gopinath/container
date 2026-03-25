@@ -18,17 +18,17 @@ describe("submit()", () => {
       json: async () => ({ message: "Token is valid" }),
     } as Response);
 
-    await submit(jest.fn());
+    await submit();
 
     expect(Storage.prototype.getItem).toHaveBeenCalledWith("jwt");
 
     expect(globalThis.fetch).toHaveBeenCalledWith(
-      "http://localhost:90/users/verify",
+      "http://localhost:90/users/verify/v1",
       {
         headers: {
           Authorization: "Bearer jwt-token-123",
         },
-      }
+      },
     );
 
     expect(globalThis.alert).toHaveBeenCalledWith("Token is valid");
@@ -39,15 +39,15 @@ describe("submit()", () => {
     globalThis.fetch = jest.fn().mockResolvedValue({
       json: async () => ({ message: "No token provided" }),
     } as Response);
-    await submit(jest.fn());
+    await submit();
 
     expect(globalThis.fetch).toHaveBeenCalledWith(
-      "http://localhost:90/users/verify",
+      "http://localhost:90/users/verify/v1",
       {
         headers: {
           Authorization: "",
         },
-      }
+      },
     );
 
     expect(globalThis.alert).toHaveBeenCalledWith("No token provided");
@@ -58,7 +58,7 @@ describe("submit()", () => {
     globalThis.fetch = jest
       .fn()
       .mockRejectedValue(new Error("Network failure"));
-    await submit(jest.fn());
+    await submit();
     expect(globalThis.alert).toHaveBeenCalledWith("Something went worng.");
   });
 });

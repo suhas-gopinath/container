@@ -4,7 +4,8 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const deps = require("./package.json").dependencies;
 module.exports = {
   output: {
-    publicPath: "auto"
+
+    publicPath: "auto",
   },
 
   resolve: {
@@ -52,7 +53,10 @@ module.exports = {
         login: "login@http://localhost:3001/remoteEntry.js",
         register: "register@http://localhost:3002/remoteEntry.js",
       },
-      exposes: {},
+
+      exposes: {
+        "./store": "./src/shared-auth/store",
+      },
       shared: {
         react: {
           singleton: true,
@@ -63,6 +67,16 @@ module.exports = {
           singleton: true,
           requiredVersion: deps["react-dom"],
           eager: true,
+        },
+        "@reduxjs/toolkit": {
+          singleton: true,
+          requiredVersion: deps["@reduxjs/toolkit"],
+          eager: false,
+        },
+        "react-redux": {
+          singleton: true,
+          requiredVersion: deps["react-redux"],
+          eager: false,
         },
       },
     }),
