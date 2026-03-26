@@ -4,7 +4,6 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const deps = require("./package.json").dependencies;
 module.exports = {
   output: {
-
     publicPath: "auto",
   },
 
@@ -71,12 +70,12 @@ module.exports = {
         "@reduxjs/toolkit": {
           singleton: true,
           requiredVersion: deps["@reduxjs/toolkit"],
-          eager: false,
+          eager: true,
         },
         "react-redux": {
           singleton: true,
           requiredVersion: deps["react-redux"],
-          eager: false,
+          eager: true,
         },
       },
     }),

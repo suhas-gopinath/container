@@ -11,6 +11,8 @@ export const Verify = () => {
   const accessToken = useSelector(selectAccessToken);
   const dispatch = useDispatch<AppDispatch>();
 
+  console.log(accessToken, ">>>");
+
   return (
     <div className="verify-container">
       <div className="verify-header">
@@ -67,8 +69,7 @@ export const Verify = () => {
             try {
               const data = await refreshToken(dispatch);
               setMessage(
-                data.message +
-                  (data.accessToken ? " - Token stored in Redux" : ""),
+                data.message + (data.message ? " - Token stored in Redux" : ""),
               );
             } catch (error) {
               setMessage(

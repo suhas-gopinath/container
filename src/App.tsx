@@ -22,43 +22,6 @@ const Register = React.lazy(() =>
 );
 
 const App = () => (
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <Provider store={store}>
     <div className="app-wrapper">
       <div className="container">
@@ -86,7 +49,6 @@ const App = () => (
                 path="*"
                 element={
                   <div className="fallback-container">
-                    <h2 className="fallback-title">Welcome to Container App</h2>
                     <p className="fallback-message">
                       Navigate to /login, /register, or /verify to access the
                       microfrontend modules.
@@ -99,7 +61,6 @@ const App = () => (
         </BrowserRouter>
       </div>
     </div>
-
   </Provider>
 );
 
