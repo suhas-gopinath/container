@@ -123,337 +123,319 @@
       },
       "4": {
         "chunkId": "984b4b",
-        "hash": "004126b9",
-        "encoded": "import%20%7B%20store%20%7D%20from%20%22./shared-auth/store%22;",
+        "hash": "ec2ce6cc",
+        "encoded": "import%20%7B%20Verify%20%7D%20from%20%22./components/Verify%22;",
         "prevChunkIds": []
       },
       "5": {
         "chunkId": "984b4b",
-        "hash": "d90a219c",
-        "encoded": "import%20%7B%20Verify%20%7D%20from%20%22./components/Verify%22;",
+        "hash": "9e6db35f",
+        "encoded": "import%20%22./index.css%22;",
         "prevChunkIds": []
       },
       "6": {
         "chunkId": "984b4b",
-        "hash": "b5e9c521",
-        "encoded": "import%20%22./index.css%22;",
+        "hash": "5999189a",
+        "encoded": "import%20%22./App.css%22;",
         "prevChunkIds": []
       },
-      "7": {
-        "chunkId": "984b4b",
-        "hash": "cbf6fb6d",
-        "encoded": "import%20%22./App.css%22;",
+      "8": {
+        "chunkId": "6c99e2",
+        "hash": "244beb1c",
+        "encoded": "const%20Login%20=%20React.lazy(()%20=%3E",
         "prevChunkIds": []
       },
       "9": {
         "chunkId": "6c99e2",
-        "hash": "a382e1d1",
-        "encoded": "const%20Login%20=%20React.lazy(()%20=%3E",
+        "hash": "28e9930e",
+        "encoded": "//@ts-ignore",
         "prevChunkIds": []
       },
       "10": {
         "chunkId": "6c99e2",
-        "hash": "436eb1dd",
-        "encoded": "//@ts-ignore",
+        "hash": "87aa9e87",
+        "encoded": "import(%22login/Login%22).then((module)%20=%3E%20(%7B",
         "prevChunkIds": []
       },
       "11": {
         "chunkId": "6c99e2",
-        "hash": "c53a5159",
-        "encoded": "import(%22login/Login%22).then((module)%20=%3E%20(%7B",
+        "hash": "51a40750",
+        "encoded": "default:%20module.Login,",
         "prevChunkIds": []
       },
       "12": {
         "chunkId": "6c99e2",
-        "hash": "f439d7bd",
-        "encoded": "default:%20module.Login,",
+        "hash": "20b50d40",
+        "encoded": "%7D)),",
         "prevChunkIds": []
       },
       "13": {
         "chunkId": "6c99e2",
-        "hash": "f2cbfd19",
-        "encoded": "%7D)),",
+        "hash": "15d9ead7",
+        "encoded": ");",
         "prevChunkIds": []
       },
-      "14": {
+      "15": {
         "chunkId": "6c99e2",
-        "hash": "0b5dba83",
-        "encoded": ");",
+        "hash": "eae7c0e3",
+        "encoded": "const%20Register%20=%20React.lazy(()%20=%3E",
         "prevChunkIds": []
       },
       "16": {
         "chunkId": "6c99e2",
-        "hash": "61353ee3",
-        "encoded": "const%20Register%20=%20React.lazy(()%20=%3E",
+        "hash": "53e94486",
+        "encoded": "//@ts-ignore",
         "prevChunkIds": []
       },
       "17": {
         "chunkId": "6c99e2",
-        "hash": "96302c49",
-        "encoded": "//@ts-ignore",
+        "hash": "a3c37fe2",
+        "encoded": "import(%22register/Register%22).then((module)%20=%3E%20(%7B",
         "prevChunkIds": []
       },
       "18": {
         "chunkId": "6c99e2",
-        "hash": "20b454a0",
-        "encoded": "import(%22register/Register%22).then((module)%20=%3E%20(%7B",
+        "hash": "e4151f94",
+        "encoded": "default:%20module.Register,",
         "prevChunkIds": []
       },
       "19": {
         "chunkId": "6c99e2",
-        "hash": "05022729",
-        "encoded": "default:%20module.Register,",
+        "hash": "06241726",
+        "encoded": "%7D)),",
         "prevChunkIds": []
       },
       "20": {
         "chunkId": "6c99e2",
-        "hash": "01c921e5",
-        "encoded": "%7D)),",
+        "hash": "88ea356e",
+        "encoded": ");",
         "prevChunkIds": []
       },
-      "21": {
-        "chunkId": "6c99e2",
-        "hash": "05a8f1d5",
-        "encoded": ");",
+      "22": {
+        "chunkId": "5ba37e",
+        "hash": "7fc1371b",
+        "encoded": "const%20App%20=%20()%20=%3E%20(",
         "prevChunkIds": []
       },
       "23": {
         "chunkId": "5ba37e",
-        "hash": "347dc930",
-        "encoded": "const%20App%20=%20()%20=%3E%20(",
+        "hash": "afd234cd",
+        "encoded": "%3Cdiv%20className=%22app-wrapper%22%3E",
         "prevChunkIds": []
       },
       "24": {
         "chunkId": "5ba37e",
-        "hash": "c2f252df",
-        "encoded": "%3CProvider%20store=%7Bstore%7D%3E",
+        "hash": "c7214bd1",
+        "encoded": "%3Cdiv%20className=%22container%22%3E",
         "prevChunkIds": []
       },
       "25": {
         "chunkId": "5ba37e",
-        "hash": "0665fc87",
-        "encoded": "%3Cdiv%20className=%22app-wrapper%22%3E",
+        "hash": "364b8598",
+        "encoded": "%3Cheader%20className=%22app-header%22%3E",
         "prevChunkIds": []
       },
       "26": {
         "chunkId": "5ba37e",
-        "hash": "9f5fcffa",
-        "encoded": "%3Cdiv%20className=%22container%22%3E",
+        "hash": "a92663c9",
+        "encoded": "%3Ch1%20className=%22app-title%22%3EHost%20Container%20App%3C/h1%3E",
         "prevChunkIds": []
       },
       "27": {
         "chunkId": "5ba37e",
-        "hash": "7505bf4e",
-        "encoded": "%3Cheader%20className=%22app-header%22%3E",
+        "hash": "70315ef4",
+        "encoded": "%3Cp%20className=%22app-subtitle%22%3EMicrofrontend%20Architecture%3C/p%3E",
         "prevChunkIds": []
       },
       "28": {
         "chunkId": "5ba37e",
-        "hash": "959bf5e9",
-        "encoded": "%3Ch1%20className=%22app-title%22%3EHost%20Container%20App%3C/h1%3E",
+        "hash": "ab6d4532",
+        "encoded": "%3C/header%3E",
         "prevChunkIds": []
       },
       "29": {
         "chunkId": "5ba37e",
-        "hash": "439cbec9",
-        "encoded": "%3Cp%20className=%22app-subtitle%22%3EMicrofrontend%20Architecture%3C/p%3E",
+        "hash": "c38db642",
+        "encoded": "%3CBrowserRouter%3E",
         "prevChunkIds": []
       },
       "30": {
-        "chunkId": "5ba37e",
-        "hash": "173d64cb",
-        "encoded": "%3C/header%3E",
+        "chunkId": "6c99e2",
+        "hash": "8e719f35",
+        "encoded": "%3CReact.Suspense",
         "prevChunkIds": []
       },
       "31": {
-        "chunkId": "5ba37e",
-        "hash": "3b33f65b",
-        "encoded": "%3CBrowserRouter%3E",
+        "chunkId": "6c99e2",
+        "hash": "45ed853d",
+        "encoded": "fallback=%7B",
         "prevChunkIds": []
       },
       "32": {
         "chunkId": "6c99e2",
-        "hash": "38b7f109",
-        "encoded": "%3CReact.Suspense",
-        "prevChunkIds": []
-      },
-      "33": {
-        "chunkId": "6c99e2",
-        "hash": "16267030",
-        "encoded": "fallback=%7B",
-        "prevChunkIds": []
-      },
-      "34": {
-        "chunkId": "6c99e2",
-        "hash": "9347a881",
+        "hash": "c86e8c3c",
         "encoded": "%3Cdiv%20className=%22loading-container%22%3E",
         "prevChunkIds": []
       },
-      "40": {
+      "38": {
         "chunkId": "269ca5",
-        "hash": "a053ed0d",
+        "hash": "abeece6a",
         "encoded": "%3C/div%3E",
+        "prevChunkIds": []
+      },
+      "39": {
+        "chunkId": "6c99e2",
+        "hash": "4771cdac",
+        "encoded": "%7D",
+        "prevChunkIds": []
+      },
+      "40": {
+        "chunkId": "6c99e2",
+        "hash": "f71dc30f",
+        "encoded": "%3E",
         "prevChunkIds": []
       },
       "41": {
         "chunkId": "6c99e2",
-        "hash": "98f83ab6",
-        "encoded": "%7D",
+        "hash": "36872c75",
+        "encoded": "%3CRoutes%3E",
         "prevChunkIds": []
       },
       "42": {
         "chunkId": "6c99e2",
-        "hash": "86e0098a",
-        "encoded": "%3E",
+        "hash": "237ba430",
+        "encoded": "%3CRoute%20path=%22/login%22%20element=%7B%3CLogin%20/%3E%7D%20/%3E",
         "prevChunkIds": []
       },
       "43": {
         "chunkId": "6c99e2",
-        "hash": "b48d5e98",
-        "encoded": "%3CRoutes%3E",
+        "hash": "0f6ec993",
+        "encoded": "%3CRoute%20path=%22/register%22%20element=%7B%3CRegister%20/%3E%7D%20/%3E",
         "prevChunkIds": []
       },
       "44": {
         "chunkId": "6c99e2",
-        "hash": "ebd5189e",
-        "encoded": "%3CRoute%20path=%22/login%22%20element=%7B%3CLogin%20/%3E%7D%20/%3E",
+        "hash": "1eecbbf4",
+        "encoded": "%3CRoute%20path=%22/verify%22%20element=%7B%3CVerify%20/%3E%7D%20/%3E",
         "prevChunkIds": []
       },
       "45": {
         "chunkId": "6c99e2",
-        "hash": "4afc0c8c",
-        "encoded": "%3CRoute%20path=%22/register%22%20element=%7B%3CRegister%20/%3E%7D%20/%3E",
+        "hash": "14d0119c",
+        "encoded": "%3CRoute",
         "prevChunkIds": []
       },
       "46": {
         "chunkId": "6c99e2",
-        "hash": "838fa795",
-        "encoded": "%3CRoute%20path=%22/verify%22%20element=%7B%3CVerify%20/%3E%7D%20/%3E",
+        "hash": "6b89ad64",
+        "encoded": "path=%22*%22",
         "prevChunkIds": []
       },
       "47": {
         "chunkId": "6c99e2",
-        "hash": "27593af5",
-        "encoded": "%3CRoute",
+        "hash": "d2295dd3",
+        "encoded": "element=%7B",
         "prevChunkIds": []
       },
       "48": {
         "chunkId": "6c99e2",
-        "hash": "867b3545",
-        "encoded": "path=%22*%22",
+        "hash": "d3f3d830",
+        "encoded": "%3Cdiv%20className=%22fallback-container%22%3E",
         "prevChunkIds": []
       },
       "49": {
         "chunkId": "6c99e2",
-        "hash": "0b869da1",
-        "encoded": "element=%7B",
-        "prevChunkIds": []
-      },
-      "50": {
-        "chunkId": "6c99e2",
-        "hash": "99fa5d93",
-        "encoded": "%3Cdiv%20className=%22fallback-container%22%3E",
-        "prevChunkIds": []
-      },
-      "51": {
-        "chunkId": "6c99e2",
-        "hash": "f93fbaec",
+        "hash": "e00b9030",
         "encoded": "%3Cp%20className=%22fallback-message%22%3E",
+        "prevChunkIds": []
+      },
+      "52": {
+        "chunkId": "6c99e2",
+        "hash": "055e80ef",
+        "encoded": "%3C/p%3E",
+        "prevChunkIds": []
+      },
+      "53": {
+        "chunkId": "269ca5",
+        "hash": "e88470f6",
+        "encoded": "%3C/div%3E",
         "prevChunkIds": []
       },
       "54": {
         "chunkId": "6c99e2",
-        "hash": "4b26bcf4",
-        "encoded": "%3C/p%3E",
+        "hash": "5c9d24d4",
+        "encoded": "%7D",
         "prevChunkIds": []
       },
       "55": {
-        "chunkId": "269ca5",
-        "hash": "52ec1202",
-        "encoded": "%3C/div%3E",
+        "chunkId": "6c99e2",
+        "hash": "a3045813",
+        "encoded": "/%3E",
         "prevChunkIds": []
       },
       "56": {
         "chunkId": "6c99e2",
-        "hash": "cdb7b2a0",
-        "encoded": "%7D",
-        "prevChunkIds": []
-      },
-      "57": {
-        "chunkId": "6c99e2",
-        "hash": "64b60c31",
-        "encoded": "/%3E",
-        "prevChunkIds": []
-      },
-      "58": {
-        "chunkId": "6c99e2",
-        "hash": "08d5d75c",
+        "hash": "3798c89c",
         "encoded": "%3C/Routes%3E",
         "prevChunkIds": []
       },
-      "59": {
+      "57": {
         "chunkId": "269ca5",
-        "hash": "8d33de84",
+        "hash": "821f0959",
         "encoded": "%3C/React.Suspense%3E",
         "prevChunkIds": []
       },
-      "60": {
+      "58": {
         "chunkId": "269ca5",
-        "hash": "0f635861",
+        "hash": "33abcc13",
         "encoded": "%3C/BrowserRouter%3E",
         "prevChunkIds": []
       },
-      "61": {
+      "59": {
         "chunkId": "6c99e2",
-        "hash": "41b08537",
+        "hash": "dd4b8b3b",
         "encoded": "%3C/div%3E",
         "prevChunkIds": []
       },
-      "62": {
+      "60": {
         "chunkId": "6c99e2",
-        "hash": "43826c56",
+        "hash": "e1df0d13",
         "encoded": "%3C/div%3E",
+        "prevChunkIds": []
+      },
+      "61": {
+        "chunkId": "269ca5",
+        "hash": "eec168c4",
+        "encoded": ");",
         "prevChunkIds": []
       },
       "63": {
-        "chunkId": "269ca5",
-        "hash": "980e8da6",
-        "encoded": "%3C/Provider%3E",
+        "chunkId": "fa4034",
+        "hash": "9b032c6c",
+        "encoded": "const%20rootElement%20=%20document.getElementById(%22app%22);",
         "prevChunkIds": []
       },
       "64": {
-        "chunkId": "269ca5",
-        "hash": "75f87d49",
-        "encoded": ");",
+        "chunkId": "fa4034",
+        "hash": "b74e7f69",
+        "encoded": "if%20(rootElement)%20%7B",
+        "prevChunkIds": []
+      },
+      "65": {
+        "chunkId": "fa4034",
+        "hash": "90f36535",
+        "encoded": "const%20root%20=%20createRoot(rootElement);",
         "prevChunkIds": []
       },
       "66": {
         "chunkId": "fa4034",
-        "hash": "71f03255",
-        "encoded": "const%20rootElement%20=%20document.getElementById(%22app%22);",
-        "prevChunkIds": []
-      },
-      "67": {
-        "chunkId": "fa4034",
-        "hash": "85dc8552",
-        "encoded": "if%20(rootElement)%20%7B",
-        "prevChunkIds": []
-      },
-      "68": {
-        "chunkId": "fa4034",
-        "hash": "1174c733",
-        "encoded": "const%20root%20=%20createRoot(rootElement);",
-        "prevChunkIds": []
-      },
-      "69": {
-        "chunkId": "fa4034",
-        "hash": "0f78629b",
+        "hash": "c892b6d7",
         "encoded": "root.render(%3CApp%20/%3E);",
         "prevChunkIds": []
       },
-      "70": {
+      "67": {
         "chunkId": "86917a",
-        "hash": "352e9b23",
+        "hash": "bf862585",
         "encoded": "%7D",
         "prevChunkIds": []
       }

@@ -1,7 +1,7 @@
-export const submit = async () => {
+export const submit = async (path: string) => {
   try {
     const token = sessionStorage.getItem("jwt");
-    const response = await fetch("http://localhost:90/users/verify/v1", {
+    const response = await fetch(`http://localhost:90/users${path}`, {
       headers: {
         Authorization: token ? `Bearer ${token}` : "",
       },
