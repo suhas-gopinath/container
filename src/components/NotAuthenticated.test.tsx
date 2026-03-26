@@ -15,12 +15,18 @@ describe("NotAuthenticated Component", () => {
     originalLocation = window.location;
     // Mock window.location
     delete (window as any).location;
-    window.location = { ...originalLocation, href: "" } as Location;
+    Object.defineProperty(window, "location", {
+      value: { ...originalLocation, href: "" },
+      writable: true,
+    });
   });
 
   afterEach(() => {
     // Restore original window.location
-    window.location = originalLocation;
+    Object.defineProperty(window, "location", {
+      value: originalLocation,
+      writable: true,
+    });
     jest.clearAllMocks();
   });
 
@@ -121,22 +127,4 @@ describe("NotAuthenticated Component", () => {
       expect(window.location.href).toBe("http://localhost:3003/login");
     });
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
