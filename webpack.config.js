@@ -53,9 +53,7 @@ module.exports = {
         register: "register@http://localhost:3002/remoteEntry.js",
       },
 
-      exposes: {
-        "./store": "./src/shared-auth/store",
-      },
+      exposes: {},
       shared: {
         react: {
           singleton: true,
@@ -65,16 +63,6 @@ module.exports = {
         "react-dom": {
           singleton: true,
           requiredVersion: deps["react-dom"],
-          eager: true,
-        },
-        "@reduxjs/toolkit": {
-          singleton: true,
-          requiredVersion: deps["@reduxjs/toolkit"],
-          eager: true,
-        },
-        "react-redux": {
-          singleton: true,
-          requiredVersion: deps["react-redux"],
           eager: true,
         },
       },
