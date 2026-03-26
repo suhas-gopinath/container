@@ -18,7 +18,7 @@
         "hash": "880c510f",
         "messageId": "58f41baf-9e19-4a76-b2b9-57ff3c9e07d6",
         "codeBlockId": null,
-        "isActive": true
+        "isActive": false
       },
       "fa4034": {
         "user": "Suhas Gopinath",
@@ -117,25 +117,19 @@
       },
       "3": {
         "chunkId": "984b4b",
-        "hash": "30b1e60d",
-        "encoded": "import%20%7B%20Provider%20%7D%20from%20%22react-redux%22;",
+        "hash": "ae1de0db",
+        "encoded": "import%20%7B%20Verify%20%7D%20from%20%22./components/Verify%22;",
         "prevChunkIds": []
       },
       "4": {
         "chunkId": "984b4b",
-        "hash": "ec2ce6cc",
-        "encoded": "import%20%7B%20Verify%20%7D%20from%20%22./components/Verify%22;",
+        "hash": "0686b447",
+        "encoded": "import%20%22./index.css%22;",
         "prevChunkIds": []
       },
       "5": {
         "chunkId": "984b4b",
-        "hash": "9e6db35f",
-        "encoded": "import%20%22./index.css%22;",
-        "prevChunkIds": []
-      },
-      "6": {
-        "chunkId": "984b4b",
-        "hash": "5999189a",
+        "hash": "1b34e769",
         "encoded": "import%20%22./App.css%22;",
         "prevChunkIds": []
       },
@@ -277,165 +271,93 @@
         "encoded": "%3Cdiv%20className=%22loading-container%22%3E",
         "prevChunkIds": []
       },
-      "38": {
+      "34": {
         "chunkId": "269ca5",
-        "hash": "abeece6a",
+        "hash": "832c6a9d",
         "encoded": "%3C/div%3E",
         "prevChunkIds": []
       },
-      "39": {
+      "35": {
         "chunkId": "6c99e2",
-        "hash": "4771cdac",
+        "hash": "dfad4947",
         "encoded": "%7D",
         "prevChunkIds": []
       },
-      "40": {
+      "36": {
         "chunkId": "6c99e2",
-        "hash": "f71dc30f",
+        "hash": "b8ad02af",
         "encoded": "%3E",
         "prevChunkIds": []
       },
-      "41": {
+      "37": {
         "chunkId": "6c99e2",
-        "hash": "36872c75",
+        "hash": "03db0ec4",
         "encoded": "%3CRoutes%3E",
         "prevChunkIds": []
       },
       "42": {
         "chunkId": "6c99e2",
-        "hash": "237ba430",
-        "encoded": "%3CRoute%20path=%22/login%22%20element=%7B%3CLogin%20/%3E%7D%20/%3E",
+        "hash": "ff627e52",
+        "encoded": "%3C/Routes%3E",
         "prevChunkIds": []
       },
       "43": {
-        "chunkId": "6c99e2",
-        "hash": "0f6ec993",
-        "encoded": "%3CRoute%20path=%22/register%22%20element=%7B%3CRegister%20/%3E%7D%20/%3E",
+        "chunkId": "269ca5",
+        "hash": "be597fc3",
+        "encoded": "%3C/React.Suspense%3E",
         "prevChunkIds": []
       },
       "44": {
-        "chunkId": "6c99e2",
-        "hash": "1eecbbf4",
-        "encoded": "%3CRoute%20path=%22/verify%22%20element=%7B%3CVerify%20/%3E%7D%20/%3E",
+        "chunkId": "269ca5",
+        "hash": "e8a82d66",
+        "encoded": "%3C/BrowserRouter%3E",
         "prevChunkIds": []
       },
       "45": {
         "chunkId": "6c99e2",
-        "hash": "14d0119c",
-        "encoded": "%3CRoute",
+        "hash": "39e57557",
+        "encoded": "%3C/div%3E",
         "prevChunkIds": []
       },
       "46": {
-        "chunkId": "6c99e2",
-        "hash": "6b89ad64",
-        "encoded": "path=%22*%22",
+        "chunkId": "269ca5",
+        "hash": "88d2ce22",
+        "encoded": "%3C/div%3E",
         "prevChunkIds": []
       },
       "47": {
-        "chunkId": "6c99e2",
-        "hash": "d2295dd3",
-        "encoded": "element=%7B",
-        "prevChunkIds": []
-      },
-      "48": {
-        "chunkId": "6c99e2",
-        "hash": "d3f3d830",
-        "encoded": "%3Cdiv%20className=%22fallback-container%22%3E",
-        "prevChunkIds": []
-      },
-      "49": {
-        "chunkId": "6c99e2",
-        "hash": "e00b9030",
-        "encoded": "%3Cp%20className=%22fallback-message%22%3E",
-        "prevChunkIds": []
-      },
-      "52": {
-        "chunkId": "6c99e2",
-        "hash": "055e80ef",
-        "encoded": "%3C/p%3E",
-        "prevChunkIds": []
-      },
-      "53": {
         "chunkId": "269ca5",
-        "hash": "e88470f6",
-        "encoded": "%3C/div%3E",
-        "prevChunkIds": []
-      },
-      "54": {
-        "chunkId": "6c99e2",
-        "hash": "5c9d24d4",
-        "encoded": "%7D",
-        "prevChunkIds": []
-      },
-      "55": {
-        "chunkId": "6c99e2",
-        "hash": "a3045813",
-        "encoded": "/%3E",
-        "prevChunkIds": []
-      },
-      "56": {
-        "chunkId": "6c99e2",
-        "hash": "3798c89c",
-        "encoded": "%3C/Routes%3E",
-        "prevChunkIds": []
-      },
-      "57": {
-        "chunkId": "269ca5",
-        "hash": "821f0959",
-        "encoded": "%3C/React.Suspense%3E",
-        "prevChunkIds": []
-      },
-      "58": {
-        "chunkId": "269ca5",
-        "hash": "33abcc13",
-        "encoded": "%3C/BrowserRouter%3E",
-        "prevChunkIds": []
-      },
-      "59": {
-        "chunkId": "6c99e2",
-        "hash": "dd4b8b3b",
-        "encoded": "%3C/div%3E",
-        "prevChunkIds": []
-      },
-      "60": {
-        "chunkId": "6c99e2",
-        "hash": "e1df0d13",
-        "encoded": "%3C/div%3E",
-        "prevChunkIds": []
-      },
-      "61": {
-        "chunkId": "269ca5",
-        "hash": "eec168c4",
+        "hash": "d6ea4408",
         "encoded": ");",
         "prevChunkIds": []
       },
-      "63": {
+      "49": {
         "chunkId": "fa4034",
-        "hash": "9b032c6c",
+        "hash": "cdcb6a30",
         "encoded": "const%20rootElement%20=%20document.getElementById(%22app%22);",
         "prevChunkIds": []
       },
-      "64": {
+      "50": {
         "chunkId": "fa4034",
-        "hash": "b74e7f69",
+        "hash": "ed18e07b",
         "encoded": "if%20(rootElement)%20%7B",
         "prevChunkIds": []
       },
-      "65": {
+      "51": {
         "chunkId": "fa4034",
-        "hash": "90f36535",
+        "hash": "bc5653de",
         "encoded": "const%20root%20=%20createRoot(rootElement);",
         "prevChunkIds": []
       },
-      "66": {
+      "52": {
         "chunkId": "fa4034",
-        "hash": "c892b6d7",
+        "hash": "8e7dcae7",
         "encoded": "root.render(%3CApp%20/%3E);",
         "prevChunkIds": []
       },
-      "67": {
-        "chunkId": "86917a",
-        "hash": "bf862585",
+      "53": {
+        "chunkId": "6c99e2",
+        "hash": "e392f376",
         "encoded": "%7D",
         "prevChunkIds": []
       }

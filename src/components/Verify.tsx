@@ -1,38 +1,125 @@
-import React, { useState } from "react";
-import { submit } from "../utils/submit";
+import React, { use, useEffect, useState } from "react";
+
+import { useApi } from "../shared-components/hooks/useApi";
 import "./Verify.css";
+import NotAuthenticated from "./NotAuthenticated";
 
 export const Verify = () => {
   const [message, setMessage] = useState<string>("");
+  const [jwt, setJwt] = useState<string>("");
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+  const { callApi: verifyV1Api, isLoading: verifyV1ApiLoading } = useApi(
+    "/verify/v1",
+    (message) => setMessage(message),
+    (message) => {
+      setMessage(message);
+    },
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+      method: "GET",
+    },
+  );
+
+  const { callApi: verifyV2Api, isLoading: verifyV2ApiLoading } = useApi(
+    "/verify/v2",
+    (message) => setMessage(message),
+    (message) => {
+      setMessage(message);
+    },
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+      method: "GET",
+    },
+  );
+
+  const { callApi: refreshTokenApi, isLoading: refreshTokenApiLoading } =
+    useApi(
+      "/refresh",
+      (message) => {
+        setJwt(message);
+        setMessage("Token refreshed successfully");
+        setIsAuthenticated(true);
+      },
+      (message) => {
+        setMessage(message);
+        setIsAuthenticated(false);
+      },
+      {
+        credentials: "include",
+        method: "POST",
+      },
+    );
+
+  const { callApi: logoutApi, isLoading: logoutApiLoading } = useApi(
+    "/logout",
+    (message) => {
+      setMessage(message);
+      setJwt("");
+      setMessage("Token revoked successfully");
+      setIsAuthenticated(false);
+    },
+    (message) => {
+      setMessage(message);
+    },
+    {
+      credentials: "include",
+      method: "POST",
+    },
+  );
+
+  useEffect(() => {
+    refreshTokenApi();
+  }, []);
+
+  if (isAuthenticated === false) {
+    return <NotAuthenticated />;
+  }
 
   return (
     <div className="verify-container">
-      <div className="verify-header">
-        <h1 className="verify-title">Verify</h1>
-        <button className="logout-button" onClick={() => {}}>
-          Logout
-        </button>
-      </div>
-
       <div className="verify-content">
         <button
-          className="verify-button"
-          onClick={() => submit()}
-          aria-label="Verify JWT token"
+          className="logout-button"
+          onClick={() => logoutApi()}
+          disabled={logoutApiLoading}
         >
-          Verify v1 (JWT only)
+          {logoutApiLoading ? "Logging out..." : "Logout"}
+        </button>
+        <button
+          className="verify-button"
+          onClick={() => verifyV1Api()}
+          disabled={verifyV1ApiLoading}
+        >
+          {verifyV1ApiLoading ? "Verifying..." : "Verify v1 (JWT only)"}
         </button>
 
-        <button className="verify-button" onClick={() => {}}>
-          Verify v2 (JWT + Redis Refresh token)
+        <button
+          className="verify-button"
+          onClick={() => verifyV2Api()}
+          disabled={verifyV2ApiLoading}
+        >
+          {verifyV2ApiLoading
+            ? "Verifying..."
+            : "Verify v2 (JWT + Redis Refresh token)"}
         </button>
 
-        <button className="verify-button" onClick={async () => {}}>
-          Refresh
+        <button
+          className="verify-button"
+          onClick={async () => refreshTokenApi()}
+          disabled={refreshTokenApiLoading}
+        >
+          {refreshTokenApiLoading ? "Refreshing token..." : "Refresh"}
         </button>
 
         {message && (
-          <div className="verify-message" role="status" aria-live="polite">
+          <div className="verify-message" role="status">
             {message}
           </div>
         )}

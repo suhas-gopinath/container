@@ -1,10 +1,10 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Provider } from "react-redux";
 import { Verify } from "./components/Verify";
 import "./index.css";
 import "./App.css";
+import Fallback from "./components/Fallback";
 
 const Login = React.lazy(() =>
   //@ts-ignore
@@ -31,11 +31,7 @@ const App = () => (
         <React.Suspense
           fallback={
             <div className="loading-container">
-              <div
-                className="loading-spinner"
-                role="status"
-                aria-label="Loading"
-              ></div>
+              <div className="loading-spinner" role="status"></div>
             </div>
           }
         >
@@ -43,17 +39,7 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/verify" element={<Verify />} />
-            <Route
-              path="*"
-              element={
-                <div className="fallback-container">
-                  <p className="fallback-message">
-                    Navigate to /login, /register, or /verify to access the
-                    microfrontend modules.
-                  </p>
-                </div>
-              }
-            />
+            <Route path="*" element={<Fallback />} />
           </Routes>
         </React.Suspense>
       </BrowserRouter>

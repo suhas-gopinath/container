@@ -25,7 +25,23 @@
   letter-spacing: 0.5px;
   margin: 0;
 }
+.fallback-container {
+  text-align: center;
+  padding: 3rem 2rem;
+}
 
+.fallback-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.fallback-message {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
+}
 .logout-button {
   padding: 0.625rem 1.25rem;
   background-color: rgba(255, 255, 255, 0.2);

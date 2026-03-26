@@ -53,7 +53,10 @@ module.exports = {
         register: "register@http://localhost:3002/remoteEntry.js",
       },
 
-      exposes: {},
+
+      exposes: {
+        "./useApi": "./src/shared-components/hooks/useApi",
+      },
       shared: {
         react: {
           singleton: true,
