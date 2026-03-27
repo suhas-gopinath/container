@@ -4,7 +4,6 @@ import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import NotAuthenticated from "./NotAuthenticated";
 
-// Mock CSS import
 jest.mock("./Verify.css", () => ({}), { virtual: true });
 
 describe("NotAuthenticated Component", () => {

@@ -1,8 +1,8 @@
-﻿import React from "react";
-import { Verify } from "./Verify";
-import { render, screen } from "@testing-library/react";
+import React from "react";
+import { render, screen, waitFor, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-
+import "@testing-library/jest-dom";
+import { Verify } from "./Verify";
 import { useApi } from "../shared-components/hooks/useApi";
 
 // Mock useApi hook
@@ -18,169 +18,522 @@ jest.mock("./NotAuthenticated", () => ({
 
 const mockUseApi = useApi as jest.MockedFunction<typeof useApi>;
 
-describe("Verify Component", () => {
+describe("Verify Component - Comprehensive Functional Tests", () => {
   const mockVerifyV1Api = jest.fn();
   const mockVerifyV2Api = jest.fn();
-
   const mockRefreshTokenApi = jest.fn();
   const mockLogoutApi = jest.fn();
 
   beforeEach(() => {
-    // Mock useApi to simulate authenticated state
-    mockUseApi.mockImplementation((path, onSuccess, onError, options) => {
-      if (path === "/refresh") {
-        // Simulate successful token refresh to set isAuthenticated = true
-        setTimeout(() => onSuccess("mock-jwt-token"), 0);
-        return { callApi: mockRefreshTokenApi, isLoading: false };
-      }
-      if (path === "/verify/v1") {
-        return { callApi: mockVerifyV1Api, isLoading: false };
-      }
-      if (path === "/verify/v2") {
-        return { callApi: mockVerifyV2Api, isLoading: false };
-      }
-      if (path === "/logout") {
-        return { callApi: mockLogoutApi, isLoading: false };
-      }
-      return { callApi: jest.fn(), isLoading: false };
-    });
-  });
-
-  afterEach(() => {
     jest.clearAllMocks();
   });
 
-  describe("Rendering Tests", () => {
-    it("should render verify container with proper className", async () => {
-      const { container } = render(<Verify />);
+  describe("Component Initialization and useEffect Behavior", () => {
+    it("should call refreshTokenApi automatically on component mount", async () => {
+      mockUseApi.mockImplementation((path) => {
+        if (path === "/refresh") {
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
 
-      // Wait for authentication to complete
-      await screen.findByRole("button", { name: /Logout/i }, { timeout: 1000 });
-
-      const verifyContainer = container.querySelector(".verify-container");
-      expect(verifyContainer).toBeDefined();
-    });
-
-    it("should render logout button with correct text", async () => {
       render(<Verify />);
 
-      const logoutButton = await screen.findByRole(
-        "button",
-        { name: /Logout/i },
-        { timeout: 1000 },
-      );
-      expect(logoutButton).toBeDefined();
+      expect(mockRefreshTokenApi).toHaveBeenCalledTimes(1);
     });
 
-    it('should render "Verify v1 (JWT only)" button', async () => {
+    it("should initialize with default state values", () => {
+      mockUseApi.mockImplementation(() => ({
+        callApi: jest.fn(),
+        isLoading: false,
+      }));
+
       render(<Verify />);
 
-      const verifyV1Button = await screen.findByRole(
-        "button",
-        { name: /Verify v1 \(JWT only\)/i },
-        { timeout: 1000 },
-      );
-      expect(verifyV1Button).toBeDefined();
-    });
-
-    it('should render "Verify v2 (JWT + Redis Refresh token)" button', async () => {
-      render(<Verify />);
-
-      const verifyV2Button = await screen.findByRole(
-        "button",
-        { name: /Verify v2 \(JWT \+ Redis Refresh token\)/i },
-        { timeout: 1000 },
-      );
-      expect(verifyV2Button).toBeDefined();
-    });
-
-    it('should render "Refresh" button', async () => {
-      render(<Verify />);
-
-      const refreshButton = await screen.findByRole(
-        "button",
-        { name: /^Refresh$/i },
-        { timeout: 1000 },
-      );
-      expect(refreshButton).toBeDefined();
+      // Component should render NotAuthenticated initially when isAuthenticated is false
+      expect(screen.getByTestId("not-authenticated")).toBeDefined();
     });
   });
 
-  describe("API Integration Tests", () => {
-    it("should call refreshTokenApi on component mount (useEffect)", async () => {
+  describe("Authentication State Management", () => {
+    it("should render NotAuthenticated component when isAuthenticated is false", () => {
+      mockUseApi.mockImplementation(() => ({
+        callApi: jest.fn(),
+        isLoading: false,
+      }));
+
       render(<Verify />);
 
-      // Wait for component to render
-      await screen.findByRole("button", { name: /Logout/i }, { timeout: 1000 });
-
-      expect(mockRefreshTokenApi).toHaveBeenCalled();
+      expect(screen.getByTestId("not-authenticated")).toBeDefined();
+      expect(screen.queryByRole("button", { name: /logout/i })).toBe(null);
     });
 
-    it('should call verifyV1Api when "Verify v1" button is clicked', async () => {
-      const user = userEvent.setup();
+    it("should render main content when isAuthenticated is true after successful token refresh", async () => {
+      mockUseApi.mockImplementation((path, onSuccess) => {
+        if (path === "/refresh") {
+          // Simulate successful authentication
+          setTimeout(() => onSuccess("mock-jwt-token"), 0);
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
       render(<Verify />);
 
-      const verifyV1Button = await screen.findByRole(
-        "button",
-        { name: /Verify v1 \(JWT only\)/i },
-        { timeout: 1000 },
-      );
+      // Wait for authentication to complete
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /logout/i })).toBeDefined();
+      });
+
+      expect(screen.queryByTestId("not-authenticated")).toBe(null);
+    });
+  });
+
+  describe("API Success Callback Functions", () => {
+    it("should update jwt, message, and isAuthenticated when refreshTokenApi success callback is triggered", async () => {
+      let refreshSuccessCallback: (message: string) => void;
+
+      mockUseApi.mockImplementation((path, onSuccess) => {
+        if (path === "/refresh") {
+          refreshSuccessCallback = onSuccess;
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
+      render(<Verify />);
+
+      // Trigger success callback with JWT token
+      await act(async () => {
+        refreshSuccessCallback!("new-jwt-token-12345");
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText("Token refreshed successfully")).toBeDefined();
+      });
+
+      // Component should now show authenticated content
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /logout/i })).toBeDefined();
+      });
+    });
+
+    it("should update message, clear jwt, and set isAuthenticated to false when logoutApi success callback is triggered", async () => {
+      let logoutSuccessCallback: (message: string) => void;
+      let refreshSuccessCallback: (message: string) => void;
+
+      mockUseApi.mockImplementation((path, onSuccess) => {
+        if (path === "/logout") {
+          logoutSuccessCallback = onSuccess;
+          return { callApi: mockLogoutApi, isLoading: false };
+        }
+        if (path === "/refresh") {
+          refreshSuccessCallback = onSuccess;
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
+      render(<Verify />);
+
+      // First authenticate the user
+      await act(async () => {
+        refreshSuccessCallback!("mock-jwt-token");
+      });
+
+      // Wait for authentication to complete
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /logout/i })).toBeDefined();
+      });
+
+      // Trigger logout success callback
+      await act(async () => {
+        logoutSuccessCallback!("Logout successful");
+      });
+
+      await waitFor(() => {
+        expect(screen.getByTestId("not-authenticated")).toBeDefined();
+      });
+    });
+  });
+
+  describe("API Error Callback Functions", () => {
+    it("should update message and set isAuthenticated to false when refreshTokenApi error callback is triggered", async () => {
+      let refreshErrorCallback: (message: string) => void;
+
+      mockUseApi.mockImplementation((path, onSuccess, onError) => {
+        if (path === "/refresh") {
+          refreshErrorCallback = onError;
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
+      render(<Verify />);
+
+      // Trigger error callback
+      await act(async () => {
+        refreshErrorCallback!("Token refresh failed");
+      });
+
+      await waitFor(() => {
+        expect(screen.getByTestId("not-authenticated")).toBeDefined();
+      });
+    });
+
+    it("should update message when verifyV1Api error callback is triggered", async () => {
+      let verifyV1ErrorCallback: (message: string) => void;
+      let refreshSuccessCallback: (message: string) => void;
+
+      mockUseApi.mockImplementation((path, onSuccess, onError) => {
+        if (path === "/verify/v1") {
+          verifyV1ErrorCallback = onError;
+          return { callApi: mockVerifyV1Api, isLoading: false };
+        }
+        if (path === "/refresh") {
+          refreshSuccessCallback = onSuccess;
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
+      render(<Verify />);
+
+      // First authenticate the user
+      await act(async () => {
+        refreshSuccessCallback!("mock-jwt-token");
+      });
+
+      // Wait for authentication to complete
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /logout/i })).toBeDefined();
+      });
+
+      // Trigger verifyV1 error callback
+      await act(async () => {
+        verifyV1ErrorCallback!("Verification v1 failed");
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText("Verification v1 failed")).toBeDefined();
+      });
+    });
+
+    it("should update message when verifyV2Api error callback is triggered", async () => {
+      let verifyV2ErrorCallback: (message: string) => void;
+      let refreshSuccessCallback: (message: string) => void;
+
+      mockUseApi.mockImplementation((path, onSuccess, onError) => {
+        if (path === "/verify/v2") {
+          verifyV2ErrorCallback = onError;
+          return { callApi: mockVerifyV2Api, isLoading: false };
+        }
+        if (path === "/refresh") {
+          refreshSuccessCallback = onSuccess;
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
+      render(<Verify />);
+
+      // First authenticate the user
+      await act(async () => {
+        refreshSuccessCallback!("mock-jwt-token");
+      });
+
+      // Wait for authentication to complete
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /logout/i })).toBeDefined();
+      });
+
+      // Trigger verifyV2 error callback
+      await act(async () => {
+        verifyV2ErrorCallback!("Verification v2 failed");
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText("Verification v2 failed")).toBeDefined();
+      });
+    });
+
+    it("should update message when logoutApi error callback is triggered", async () => {
+      let logoutErrorCallback: (message: string) => void;
+      let refreshSuccessCallback: (message: string) => void;
+
+      mockUseApi.mockImplementation((path, onSuccess, onError) => {
+        if (path === "/logout") {
+          logoutErrorCallback = onError;
+          return { callApi: mockLogoutApi, isLoading: false };
+        }
+        if (path === "/refresh") {
+          refreshSuccessCallback = onSuccess;
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
+      render(<Verify />);
+
+      // First authenticate the user
+      await act(async () => {
+        refreshSuccessCallback!("mock-jwt-token");
+      });
+
+      // Wait for authentication to complete
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /logout/i })).toBeDefined();
+      });
+
+      // Trigger logout error callback
+      await act(async () => {
+        logoutErrorCallback!("Logout failed");
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText("Logout failed")).toBeDefined();
+      });
+    });
+  });
+
+  describe("Loading States", () => {
+    it("should disable and show loading text on logout button when logoutApiLoading is true", async () => {
+      mockUseApi.mockImplementation((path, onSuccess) => {
+        if (path === "/logout") {
+          return { callApi: mockLogoutApi, isLoading: true };
+        }
+        if (path === "/refresh") {
+          setTimeout(() => onSuccess("mock-jwt-token"), 0);
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
+      render(<Verify />);
+
+      await waitFor(() => {
+        const logoutButton = screen.getByRole("button", {
+          name: /logging out/i,
+        });
+        expect(logoutButton).toBeDisabled();
+        expect(logoutButton).toHaveTextContent("Logging out...");
+      });
+    });
+
+    it("should disable and show loading text on verify v1 button when verifyV1ApiLoading is true", async () => {
+      mockUseApi.mockImplementation((path, onSuccess) => {
+        if (path === "/verify/v1") {
+          return { callApi: mockVerifyV1Api, isLoading: true };
+        }
+        if (path === "/refresh") {
+          setTimeout(() => onSuccess("mock-jwt-token"), 0);
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
+      render(<Verify />);
+
+      await waitFor(() => {
+        const verifyButton = screen.getByRole("button", { name: /verifying/i });
+        expect(verifyButton).toBeDisabled();
+        expect(verifyButton).toHaveTextContent("Verifying...");
+      });
+    });
+
+    it("should disable and show loading text on verify v2 button when verifyV2ApiLoading is true", async () => {
+      mockUseApi.mockImplementation((path, onSuccess) => {
+        if (path === "/verify/v2") {
+          return { callApi: mockVerifyV2Api, isLoading: true };
+        }
+        if (path === "/refresh") {
+          setTimeout(() => onSuccess("mock-jwt-token"), 0);
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
+      render(<Verify />);
+
+      await waitFor(() => {
+        const verifyButton = screen.getByRole("button", { name: /verifying/i });
+        expect(verifyButton).toBeDisabled();
+        expect(verifyButton).toHaveTextContent("Verifying...");
+      });
+    });
+
+    it("should disable and show loading text on refresh button when refreshTokenApiLoading is true", async () => {
+      mockUseApi.mockImplementation((path, onSuccess) => {
+        if (path === "/refresh") {
+          setTimeout(() => onSuccess("mock-jwt-token"), 0);
+          return { callApi: mockRefreshTokenApi, isLoading: true };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
+      render(<Verify />);
+
+      await waitFor(() => {
+        const refreshButton = screen.getByRole("button", {
+          name: /refreshing token/i,
+        });
+        expect(refreshButton).toBeDisabled();
+        expect(refreshButton).toHaveTextContent("Refreshing token...");
+      });
+    });
+  });
+
+  describe("Message Display Functionality", () => {
+    it("should not display message div when message state is empty", async () => {
+      mockUseApi.mockImplementation((path) => {
+        if (path === "/refresh") {
+          // Don't trigger success callback to keep message empty
+          return { callApi: jest.fn(), isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
+      render(<Verify />);
+
+      expect(screen.queryByRole("status")).toBe(null);
+    });
+
+    it("should display message div with correct content when message state is set", async () => {
+      mockUseApi.mockImplementation((path, onSuccess) => {
+        if (path === "/refresh") {
+          setTimeout(() => onSuccess("mock-jwt-token"), 0);
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
+      render(<Verify />);
+
+      await waitFor(() => {
+        const messageDiv = screen.getByRole("status");
+        expect(messageDiv).toBeDefined();
+        expect(messageDiv).toHaveTextContent("Token refreshed successfully");
+      });
+    });
+  });
+
+  describe("User Interactions and API Calls", () => {
+    it("should call verifyV1Api when verify v1 button is clicked", async () => {
+      const user = userEvent.setup();
+
+      mockUseApi.mockImplementation((path, onSuccess) => {
+        if (path === "/verify/v1") {
+          return { callApi: mockVerifyV1Api, isLoading: false };
+        }
+        if (path === "/refresh") {
+          setTimeout(() => onSuccess("mock-jwt-token"), 0);
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
+      render(<Verify />);
+
+      const verifyV1Button = await screen.findByRole("button", {
+        name: /verify v1 \(jwt only\)/i,
+      });
+
       await user.click(verifyV1Button);
 
-      expect(mockVerifyV1Api).toHaveBeenCalled();
+      expect(mockVerifyV1Api).toHaveBeenCalledTimes(1);
     });
 
-    it('should call verifyV2Api when "Verify v2" button is clicked', async () => {
+    it("should call verifyV2Api when verify v2 button is clicked", async () => {
       const user = userEvent.setup();
+
+      mockUseApi.mockImplementation((path, onSuccess) => {
+        if (path === "/verify/v2") {
+          return { callApi: mockVerifyV2Api, isLoading: false };
+        }
+        if (path === "/refresh") {
+          setTimeout(() => onSuccess("mock-jwt-token"), 0);
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
       render(<Verify />);
 
-      const verifyV2Button = await screen.findByRole(
-        "button",
-        { name: /Verify v2 \(JWT \+ Redis Refresh token\)/i },
-        { timeout: 1000 },
-      );
+      const verifyV2Button = await screen.findByRole("button", {
+        name: /verify v2 \(jwt \+ redis refresh token\)/i,
+      });
+
       await user.click(verifyV2Button);
 
-      expect(mockVerifyV2Api).toHaveBeenCalled();
+      expect(mockVerifyV2Api).toHaveBeenCalledTimes(1);
     });
 
-    it('should call refreshTokenApi when "Refresh" button is clicked', async () => {
+    it("should call refreshTokenApi when refresh button is clicked", async () => {
       const user = userEvent.setup();
+
+      mockUseApi.mockImplementation((path, onSuccess) => {
+        if (path === "/refresh") {
+          setTimeout(() => onSuccess("mock-jwt-token"), 0);
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
       render(<Verify />);
 
-      const refreshButton = await screen.findByRole(
-        "button",
-        { name: /^Refresh$/i },
-        { timeout: 1000 },
-      );
+      const refreshButton = await screen.findByRole("button", {
+        name: /^refresh$/i,
+      });
 
       // Clear the initial mount call
       mockRefreshTokenApi.mockClear();
 
       await user.click(refreshButton);
 
-      expect(mockRefreshTokenApi).toHaveBeenCalled();
+      expect(mockRefreshTokenApi).toHaveBeenCalledTimes(1);
     });
 
-    it('should call logoutApi when "Logout" button is clicked', async () => {
+    it("should call logoutApi when logout button is clicked", async () => {
       const user = userEvent.setup();
+
+      mockUseApi.mockImplementation((path, onSuccess) => {
+        if (path === "/logout") {
+          return { callApi: mockLogoutApi, isLoading: false };
+        }
+        if (path === "/refresh") {
+          setTimeout(() => onSuccess("mock-jwt-token"), 0);
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
       render(<Verify />);
 
-      const logoutButton = await screen.findByRole(
-        "button",
-        { name: /Logout/i },
-        { timeout: 1000 },
-      );
+      const logoutButton = await screen.findByRole("button", {
+        name: /logout/i,
+      });
+
       await user.click(logoutButton);
 
-      expect(mockLogoutApi).toHaveBeenCalled();
+      expect(mockLogoutApi).toHaveBeenCalledTimes(1);
     });
+  });
 
-    it('should pass correct path "/verify/v1" to useApi hook', async () => {
+  describe("useApi Hook Configuration", () => {
+    it("should configure verifyV1Api with correct path, credentials, method, and Authorization header", async () => {
+      mockUseApi.mockImplementation((path, onSuccess) => {
+        if (path === "/refresh") {
+          setTimeout(() => onSuccess("test-jwt-token"), 0);
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
       render(<Verify />);
 
-      // Wait for component to render
-      await screen.findByRole("button", { name: /Logout/i }, { timeout: 1000 });
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /logout/i })).toBeDefined();
+      });
 
       expect(mockUseApi).toHaveBeenCalledWith(
         "/verify/v1",
@@ -189,15 +542,27 @@ describe("Verify Component", () => {
         expect.objectContaining({
           credentials: "include",
           method: "GET",
+          headers: expect.objectContaining({
+            Authorization: expect.stringContaining("Bearer"),
+          }),
         }),
       );
     });
 
-    it('should pass correct path "/verify/v2" to useApi hook', async () => {
+    it("should configure verifyV2Api with correct path, credentials, method, and Authorization header", async () => {
+      mockUseApi.mockImplementation((path, onSuccess) => {
+        if (path === "/refresh") {
+          setTimeout(() => onSuccess("test-jwt-token"), 0);
+          return { callApi: mockRefreshTokenApi, isLoading: false };
+        }
+        return { callApi: jest.fn(), isLoading: false };
+      });
+
       render(<Verify />);
 
-      // Wait for component to render
-      await screen.findByRole("button", { name: /Logout/i }, { timeout: 1000 });
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /logout/i })).toBeDefined();
+      });
 
       expect(mockUseApi).toHaveBeenCalledWith(
         "/verify/v2",
@@ -206,15 +571,20 @@ describe("Verify Component", () => {
         expect.objectContaining({
           credentials: "include",
           method: "GET",
+          headers: expect.objectContaining({
+            Authorization: expect.stringContaining("Bearer"),
+          }),
         }),
       );
     });
 
-    it('should pass correct path "/refresh" to useApi hook', async () => {
-      render(<Verify />);
+    it("should configure refreshTokenApi with correct path, credentials, and method", async () => {
+      mockUseApi.mockImplementation(() => ({
+        callApi: jest.fn(),
+        isLoading: false,
+      }));
 
-      // Wait for component to render
-      await screen.findByRole("button", { name: /Logout/i }, { timeout: 1000 });
+      render(<Verify />);
 
       expect(mockUseApi).toHaveBeenCalledWith(
         "/refresh",
@@ -227,11 +597,13 @@ describe("Verify Component", () => {
       );
     });
 
-    it('should pass correct path "/logout" to useApi hook', async () => {
-      render(<Verify />);
+    it("should configure logoutApi with correct path, credentials, and method", async () => {
+      mockUseApi.mockImplementation(() => ({
+        callApi: jest.fn(),
+        isLoading: false,
+      }));
 
-      // Wait for component to render
-      await screen.findByRole("button", { name: /Logout/i }, { timeout: 1000 });
+      render(<Verify />);
 
       expect(mockUseApi).toHaveBeenCalledWith(
         "/logout",
@@ -242,48 +614,6 @@ describe("Verify Component", () => {
           method: "POST",
         }),
       );
-    });
-  });
-
-  describe("Authentication Flow Tests", () => {
-    it("should render NotAuthenticated component when isAuthenticated is false", () => {
-      // Mock useApi to simulate failed authentication
-      mockUseApi.mockClear();
-      mockUseApi.mockImplementation(() => ({
-        callApi: jest.fn(),
-
-        isLoading: false,
-      }));
-
-      render(<Verify />);
-
-      // Component should render NotAuthenticated initially
-      expect(screen.queryByTestId("not-authenticated")).toBeDefined();
-    });
-  });
-
-  describe("Accessibility Tests", () => {
-    it("all buttons should be keyboard accessible", async () => {
-      render(<Verify />);
-
-      // Wait for component to render
-      await screen.findByRole("button", { name: /Logout/i }, { timeout: 1000 });
-
-      const buttons = screen.getAllByRole("button");
-      buttons.forEach((button) => {
-        expect(button.tagName).toBe("BUTTON");
-      });
-    });
-
-    it('message div should have role="status" attribute when message exists', async () => {
-      const { container } = render(<Verify />);
-
-      // Wait for component to render
-      await screen.findByRole("button", { name: /Logout/i }, { timeout: 1000 });
-
-      const messageDiv = container.querySelector('[role="status"]');
-      // Role status should be present on message div
-      expect(messageDiv).toBeDefined();
     });
   });
 });
