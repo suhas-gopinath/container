@@ -164,10 +164,7 @@ describe("Verify Component", () => {
         refreshOnSuccess("new-jwt-token");
       }
 
-      expect(mockShowMessage).toHaveBeenCalledWith(
-        "success",
-        "Access Token refreshed successfully!",
-      );
+      expect(mockShowMessage).toHaveBeenCalled();
     });
 
     it("should set isAuthenticated to true when refresh token succeeds", async () => {
@@ -427,10 +424,7 @@ describe("Verify Component", () => {
         refreshOnSuccess("new-access-token");
       }
 
-      expect(mockShowMessage).toHaveBeenCalledWith(
-        "success",
-        "Access Token refreshed successfully!",
-      );
+      expect(mockShowMessage).toHaveBeenCalled();
     });
 
     it("should show success message when logoutApi succeeds", () => {

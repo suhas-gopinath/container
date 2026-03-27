@@ -3,48 +3,48 @@
   top: 20px;
   right: 20px;
   z-index: 9999;
-  max-width: 400px;
+  max-width: 700px;
 }
 
 .message {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 18px 24px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
   animation: slideIn 0.3s ease-out;
-  font-size: 14px;
+  font-size: 28px;
   font-weight: 500;
 }
 
 .message-success {
   background-color: lch(94.69% 34.59 149.7);
-  border-left: 4px solid hsl(134, 100%, 50%);
+  border-left: 6px solid hsl(134, 100%, 50%);
   color: #155724;
 }
 
 .message-error {
   background-color: lch(89.88% 14.08 14.1);
-  border-left: 4px solid hsl(354, 100%, 50%);
+  border-left: 6px solid hsl(354, 100%, 50%);
   color: #721c24;
 }
 
 .message-text {
   flex: 1;
-  margin-right: 12px;
+  margin-right: 18px;
 }
 
 .message-close {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 36px;
   cursor: pointer;
   color: inherit;
   padding: 0;
-  width: 24px;
-  height: 24px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,8 +57,8 @@
 }
 
 .message-close:focus {
-  outline: 2px solid currentColor;
-  outline-offset: 2px;
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
 }
 
 @keyframes slideIn {
