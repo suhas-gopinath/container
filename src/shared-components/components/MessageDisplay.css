@@ -20,14 +20,14 @@
 }
 
 .message-success {
-  background-color: #d4edda;
-  border-left: 4px solid #28a745;
+  background-color: lch(94.69% 34.59 149.7);
+  border-left: 4px solid hsl(134, 100%, 50%);
   color: #155724;
 }
 
 .message-error {
-  background-color: #f8d7da;
-  border-left: 4px solid #dc3545;
+  background-color: lch(89.88% 14.08 14.1);
+  border-left: 4px solid hsl(354, 100%, 50%);
   color: #721c24;
 }
 

@@ -1,9 +1,8 @@
-import React, { use, useEffect, useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import { useApi } from "../shared-components/hooks/useApi";
-import "./Verify.css";
 import NotAuthenticated from "./NotAuthenticated";
 import { useMessage } from "../shared-components/contexts/MessageContext";
+import "./Verify.css";
 
 export const Verify = () => {
   const [jwt, setJwt] = useState<string>("");
@@ -45,7 +44,10 @@ export const Verify = () => {
       "/refresh",
       (message) => {
         setJwt(message);
-        showMessage("success", "Access Token refreshed successfully!");
+        showMessage(
+          "success",
+          "Access Token refreshed successfully. It will expire in 5 mins",
+        );
         setIsAuthenticated(true);
       },
       (message) => {
@@ -82,6 +84,12 @@ export const Verify = () => {
     return <NotAuthenticated />;
   }
 
+  const isAnyApiLoading =
+    verifyV1ApiLoading ||
+    verifyV2ApiLoading ||
+    refreshTokenApiLoading ||
+    logoutApiLoading;
+
   return (
     <div className="verify-container">
       <div className="verify-content">
@@ -107,7 +115,7 @@ export const Verify = () => {
         >
           {verifyV2ApiLoading
             ? "Verifying..."
-            : "Verify v2 (JWT + Redis Refresh token)"}
+            : "Verify v2 (JWT + Redis token)"}
         </button>
 
         <button
