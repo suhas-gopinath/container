@@ -54,6 +54,7 @@ module.exports = {
       },
       exposes: {
         "./useApi": "./src/shared-components/hooks/useApi",
+        "./useMessage": "./src/shared-components/contexts/MessageContext",
       },
       shared: {
         react: {

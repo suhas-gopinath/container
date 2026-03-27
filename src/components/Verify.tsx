@@ -3,17 +3,18 @@ import React, { use, useEffect, useState } from "react";
 import { useApi } from "../shared-components/hooks/useApi";
 import "./Verify.css";
 import NotAuthenticated from "./NotAuthenticated";
+import { useMessage } from "../shared-components/contexts/MessageContext";
 
 export const Verify = () => {
-  const [message, setMessage] = useState<string>("");
   const [jwt, setJwt] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const { showMessage } = useMessage();
 
   const { callApi: verifyV1Api, isLoading: verifyV1ApiLoading } = useApi(
     "/verify/v1",
-    (message) => setMessage(message),
+    (message) => showMessage("success", message),
     (message) => {
-      setMessage(message);
+      showMessage("error", message);
     },
     {
       credentials: "include",
@@ -26,9 +27,9 @@ export const Verify = () => {
 
   const { callApi: verifyV2Api, isLoading: verifyV2ApiLoading } = useApi(
     "/verify/v2",
-    (message) => setMessage(message),
+    (message) => showMessage("success", message),
     (message) => {
-      setMessage(message);
+      showMessage("error", message);
     },
     {
       credentials: "include",
@@ -44,11 +45,11 @@ export const Verify = () => {
       "/refresh",
       (message) => {
         setJwt(message);
-        setMessage("Token refreshed successfully");
+        showMessage("success", "Access Token refreshed successfully!");
         setIsAuthenticated(true);
       },
       (message) => {
-        setMessage(message);
+        showMessage("error", message);
         setIsAuthenticated(false);
       },
       {
@@ -60,13 +61,12 @@ export const Verify = () => {
   const { callApi: logoutApi, isLoading: logoutApiLoading } = useApi(
     "/logout",
     (message) => {
-      setMessage(message);
+      showMessage("success", message);
       setJwt("");
-      setMessage("Token revoked successfully");
       setIsAuthenticated(false);
     },
     (message) => {
-      setMessage(message);
+      showMessage("error", message);
     },
     {
       credentials: "include",
@@ -117,12 +117,6 @@ export const Verify = () => {
         >
           {refreshTokenApiLoading ? "Refreshing token..." : "Refresh"}
         </button>
-
-        {message && (
-          <div className="verify-message" role="status">
-            {message}
-          </div>
-        )}
       </div>
     </div>
   );

@@ -1,9 +1,13 @@
 /**
  * Shared Components Barrel Export
- *
- * This file exports shared components and utilities
- * that are exposed via Module Federation to remote MFEs.
+
+
+
+ * Only the useMessage hook is exposed to remotes
  */
 
 export { useApi } from "./hooks/useApi";
 export type { ApiOptions } from "./hooks/useApi";
+
+// Only export the hook - Provider and Display stay internal to container
+export { useMessage } from "./contexts/MessageContext";

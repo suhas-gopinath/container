@@ -1,6 +1,8 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { MessageProvider } from "./shared-components/contexts/MessageContext";
+import MessageDisplay from "./shared-components/components/MessageDisplay";
 import { Verify } from "./components/Verify";
 import "./index.css";
 import "./App.css";
@@ -21,30 +23,34 @@ const Register = React.lazy(() =>
 );
 
 const App = () => (
-  <div className="app-wrapper">
-    <div className="container">
-      <header className="app-header">
-        <h1 className="app-title">Host Container App</h1>
-        <p className="app-subtitle">Microfrontend Architecture</p>
-      </header>
-      <BrowserRouter>
-        <React.Suspense
-          fallback={
-            <div className="loading-container">
-              <div className="loading-spinner" role="status"></div>
-            </div>
-          }
-        >
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/verify" element={<Verify />} />
-            <Route path="*" element={<Fallback />} />
-          </Routes>
-        </React.Suspense>
-      </BrowserRouter>
+  <MessageProvider>
+    <MessageDisplay />
+
+    <div className="app-wrapper">
+      <div className="container">
+        <header className="app-header">
+          <h1 className="app-title">Host Container App</h1>
+          <p className="app-subtitle">Microfrontend Architecture</p>
+        </header>
+        <BrowserRouter>
+          <React.Suspense
+            fallback={
+              <div className="loading-container">
+                <div className="loading-spinner" role="status"></div>
+              </div>
+            }
+          >
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/verify" element={<Verify />} />
+              <Route path="*" element={<Fallback />} />
+            </Routes>
+          </React.Suspense>
+        </BrowserRouter>
+      </div>
     </div>
-  </div>
+  </MessageProvider>
 );
 
 const rootElement = document.getElementById("app");
