@@ -3,7 +3,7 @@
   top: 20px;
   right: 20px;
   z-index: 9999;
-  max-width: 700px;
+  max-width: 550px;
 }
 
 .message {
@@ -15,18 +15,18 @@
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
   animation: slideIn 0.3s ease-out;
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 500;
 }
 
 .message-success {
-  background-color: lch(94.69% 34.59 149.7);
+  background-color: lch(92.44% 52.91 148.28);
   border-left: 6px solid hsl(134, 100%, 50%);
   color: #155724;
 }
 
 .message-error {
-  background-color: lch(89.88% 14.08 14.1);
+  background-color: lch(75.36% 38.22 16.74);
   border-left: 6px solid hsl(354, 100%, 50%);
   color: #721c24;
 }
