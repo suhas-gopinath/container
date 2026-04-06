@@ -10,7 +10,7 @@ export default function NotAuthenticated() {
         </div>
         <button
           className="verify-button"
-          onClick={() => (window.location.href = "http://localhost:3003/login")}
+          onClick={() => (window.location.href = "/login")}
         >
           Go to Login
         </button>

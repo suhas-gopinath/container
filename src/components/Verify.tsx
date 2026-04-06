@@ -80,15 +80,9 @@ export const Verify = () => {
     refreshTokenApi();
   }, []);
 
-  if (isAuthenticated === false) {
+  if (isAuthenticated === false && !refreshTokenApiLoading) {
     return <NotAuthenticated />;
   }
-
-  const isAnyApiLoading =
-    verifyV1ApiLoading ||
-    verifyV2ApiLoading ||
-    refreshTokenApiLoading ||
-    logoutApiLoading;
 
   return (
     <div className="verify-container">

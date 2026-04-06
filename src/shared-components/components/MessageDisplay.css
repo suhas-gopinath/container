@@ -10,24 +10,24 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 24px;
+  padding: 14px 20px;
   margin-bottom: 15px;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
   animation: slideIn 0.3s ease-out;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 500;
 }
 
 .message-success {
-  background-color: lch(92.44% 52.91 148.28);
-  border-left: 6px solid hsl(134, 100%, 50%);
+  background-color: lch(94.61% 35.21 149.54);
+  border-left: 10px solid hsl(134, 100%, 33%);
   color: #155724;
 }
 
 .message-error {
-  background-color: lch(75.36% 38.22 16.74);
-  border-left: 6px solid hsl(354, 100%, 50%);
+  background-color: lch(78.47% 32.57 15.86);
+  border-left: 10px solid hsl(354, 100%, 30%);
   color: #721c24;
 }
 

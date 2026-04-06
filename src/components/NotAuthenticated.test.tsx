@@ -103,14 +103,14 @@ describe("NotAuthenticated Component", () => {
   });
 
   describe("Navigation Tests", () => {
-    it("should redirect to http://localhost:3003/login when button is clicked", async () => {
+    it("should redirect to /login when button is clicked", async () => {
       const user = userEvent.setup();
       render(<NotAuthenticated />);
 
       const button = screen.getByRole("button", { name: /Go to Login/i });
       await user.click(button);
 
-      expect(window.location.href).toBe("http://localhost:3003/login");
+      expect(window.location.href).toBe("/login");
     });
 
     it("should use window.location.href for navigation", async () => {
@@ -123,7 +123,7 @@ describe("NotAuthenticated Component", () => {
       await user.click(button);
 
       expect(window.location.href).not.toBe(initialHref);
-      expect(window.location.href).toBe("http://localhost:3003/login");
+      expect(window.location.href).toBe("/login");
     });
   });
 });
