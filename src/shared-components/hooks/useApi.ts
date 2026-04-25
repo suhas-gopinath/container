@@ -29,7 +29,7 @@ export const useApi = (
       }
       onSuccess(data.message);
     } catch (error: unknown) {
-      onError("Service is down. Please try again later");
+      onError("Something went wrong. Please try again later.");
     } finally {
       setIsLoading(false);
     }

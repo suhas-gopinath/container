@@ -3,10 +3,12 @@ import { useApi } from "../shared-components/hooks/useApi";
 import NotAuthenticated from "./NotAuthenticated";
 import { useMessage } from "../shared-components/contexts/MessageContext";
 import "./Verify.css";
+import { set } from "lodash";
 
 export const Verify = () => {
   const [jwt, setJwt] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [firstLoad, setFirstLoad] = useState<boolean>(true);
   const { showMessage } = useMessage();
 
   const { callApi: verifyV1Api, isLoading: verifyV1ApiLoading } = useApi(
@@ -46,9 +48,12 @@ export const Verify = () => {
         setJwt(message);
         showMessage(
           "success",
-          "Access Token refreshed successfully. It will expire in 5 mins",
+          firstLoad
+            ? "Access Token generated successfully. It will expire in 5 mins"
+            : "Access Token refreshed successfully. It will expire in 5 mins",
         );
         setIsAuthenticated(true);
+        setFirstLoad(false);
       },
       (message) => {
         showMessage("error", message);
