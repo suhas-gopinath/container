@@ -1,5 +1,5 @@
 import React from "react";
-import "./Verify.css";
+import "../Verify/index.css";
 
 export default function NotAuthenticated() {
   return (

@@ -2,10 +2,10 @@
 import { render, screen, waitFor, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
-import { Verify } from "./Verify";
-import { useApi } from "../shared-components/hooks/useApi";
-import { useMessage } from "../shared-components/contexts/MessageContext";
-import NotAuthenticated from "./NotAuthenticated";
+import { Verify } from "../Verify";
+import { useApi } from "../../shared-components/hooks/useApi";
+import { useMessage } from "../../shared-components/contexts/MessageContext";
+import NotAuthenticated from "../NotAuthenticated";
 
 // Mock dependencies
 jest.mock("../shared-components/hooks/useApi");

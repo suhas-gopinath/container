@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useApi } from "../shared-components/hooks/useApi";
-import NotAuthenticated from "./NotAuthenticated";
-import { useMessage } from "../shared-components/contexts/MessageContext";
-import "./Verify.css";
-import { set } from "lodash";
+import { useApi } from "../../shared-components/hooks/useApi";
+import NotAuthenticated from "../NotAuthenticated";
+import { useMessage } from "../../shared-components/contexts/MessageContext";
+import "./index.css";
 
 export const Verify = () => {
   const [jwt, setJwt] = useState<string>("");

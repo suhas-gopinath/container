@@ -50,7 +50,6 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {
         login: "login@http://localhost:3001/remoteEntry.js",
-        register: "register@http://localhost:3002/remoteEntry.js",
       },
       exposes: {
         "./useApi": "./src/shared-components/hooks/useApi",

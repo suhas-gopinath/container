@@ -5,3 +5,8 @@ declare module "login/Login" {
 declare module "register/Register" {
   export const Register: React.ComponentType;
 }
+
+declare module "*.css" {
+  const content: Record<string, string>;
+  export default content;
+}

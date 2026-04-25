@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Fallback from "./Fallback";
+import Fallback from ".";
 
 // Mock CSS import
 jest.mock("../App.css", () => ({}), { virtual: true });
@@ -114,27 +114,4 @@ describe("Fallback Component", () => {
       });
     });
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });

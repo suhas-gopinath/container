@@ -17,7 +17,7 @@ const Login = React.lazy(() =>
 );
 
 const Register = React.lazy(() =>
-  import("register/Register").then((module) => ({
+  import("login/Register").then((module) => ({
     default: module.Register,
   })),
 );
