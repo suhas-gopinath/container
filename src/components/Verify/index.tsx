@@ -43,8 +43,8 @@ export const Verify = () => {
   const { callApi: refreshTokenApi, isLoading: refreshTokenApiLoading } =
     useApi(
       "/refresh",
-      (message) => {
-        setJwt(message);
+      (accessToken) => {
+        setJwt(accessToken);
         showMessage(
           "success",
           firstLoad
